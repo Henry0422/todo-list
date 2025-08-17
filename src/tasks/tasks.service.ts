@@ -18,22 +18,22 @@ export class TasksService {
     return this.prisma.task.findMany();
   }
 
-  findOne(bookWhereUniqueInput: Prisma.TaskWhereUniqueInput) {
+  findOne(id: Prisma.TaskWhereUniqueInput) {
     return this.prisma.task.findUnique({
-      where: bookWhereUniqueInput
+      where: id
     });
   }
 
-  update(where: Prisma.TaskWhereUniqueInput, data: Prisma.TaskUpdateInput) {
+  update(id: Prisma.TaskWhereUniqueInput, updateTaskDto: Prisma.TaskUpdateInput) {
     return this.prisma.task.update({
-      data,
-      where,
+      data: updateTaskDto,
+      where: id,
     })
   }
 
-  remove(where: Prisma.TaskWhereUniqueInput) {
+  remove(id: Prisma.TaskWhereUniqueInput) {
     return this.prisma.task.delete({
-      where
+      where: id
     });
   }
 }
