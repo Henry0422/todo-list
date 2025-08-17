@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
-import { CreateListDto } from './dto/create-list.dto';
-import { UpdateListDto } from './dto/update-list.dto';
+import { PrismaService } from 'src/prisma.service';
+import { Prisma } from 'generated/prisma';
 
 @Injectable()
 export class ListsService {
-  create(createListDto: CreateListDto) {
-    return 'This action adds a new list';
+  constructor(private prisma: PrismaService) {}
+
+  create(createListDto: Prisma.ListCreateInput) {
+    return this.prisma.list.create({
+      data: createListDto,
+    });
   }
 
   findAll() {
-    return `This action returns all lists`;
+    return this.prisma.list.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} list`;
+  findOne(id: Prisma.ListWhereUniqueInput) {
+    return this.prisma.list.findUnique({
+      where: id
+    });
   }
 
-  update(id: number, updateListDto: UpdateListDto) {
-    return `This action updates a #${id} list`;
+  update(id: Prisma.ListWhereUniqueInput, updateListDto: Prisma.ListUpdateInput) {
+    return this.prisma.list.update({
+      data: updateListDto,
+      where: id
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} list`;
+  remove(id: Prisma.ListWhereUniqueInput) {
+    return this.prisma.list.delete({
+      where: id
+    });
   }
 }

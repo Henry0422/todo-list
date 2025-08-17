@@ -1,14 +1,13 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ListsService } from './lists.service';
-import { CreateListDto } from './dto/create-list.dto';
-import { UpdateListDto } from './dto/update-list.dto';
+import { Prisma } from 'generated/prisma';
 
 @Controller('lists')
 export class ListsController {
   constructor(private readonly listsService: ListsService) {}
 
   @Post()
-  create(@Body() createListDto: CreateListDto) {
+  create(@Body() createListDto: Prisma.ListCreateInput) {
     return this.listsService.create(createListDto);
   }
 
@@ -19,16 +18,16 @@ export class ListsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.listsService.findOne(+id);
+    return this.listsService.findOne({ id: +id });
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateListDto: UpdateListDto) {
-    return this.listsService.update(+id, updateListDto);
+  update(@Param('id') id: string, @Body() updateListDto: Prisma.ListUpdateInput) {
+    return this.listsService.update({ id: +id }, updateListDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.listsService.remove(+id);
+    return this.listsService.remove({ id: +id });
   }
 }
