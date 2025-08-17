@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  // output   = "../generated/prisma"
 }
 
 datasource db {
@@ -17,6 +17,7 @@ datasource db {
 model List {
   id            Int       @default(autoincrement()) @id
   name          String
+  tasks         Task[]
 }
 
 model Task {
@@ -27,6 +28,8 @@ model Task {
   dueDate       DateTime
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  list          List?     @relation(fields: [listId], references: [id])
+  listId        Int?
 }
 
 enum Status {
