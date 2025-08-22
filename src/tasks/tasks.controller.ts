@@ -19,6 +19,15 @@ export class TasksController {
     return this.tasksService.findAll();
   }
 
+  @Get('listid/:id')
+  async findAllByListID(@Param('id', ParseIntPipe) id: number) {
+    const tasks = await this.tasksService.findAllByListID(id);
+    if (!tasks)
+      throw new NotFoundException(`Article with listId: ${id} not found`);
+    console.log(tasks[0].id);
+    return tasks;
+  }
+
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const task = await this.tasksService.findOne(id);

@@ -15,6 +15,14 @@ export class TasksService {
     return this.prisma.task.findMany();
   }
 
+  findAllByListID(id: number) {
+    return this.prisma.task.findMany({
+      where: {
+        listId: id
+      }
+    })
+  }
+
   findOne(id: number) {
     return this.prisma.task.findUnique({
       where: { id }
